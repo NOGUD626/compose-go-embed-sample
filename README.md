@@ -1,4 +1,4 @@
-# ssh-server-go
+# compose-go-embed-sample
 
 `docker-compose.yml` と `Dockerfile` を 1 つの Go 実行ファイルに内包し、`docker compose` コマンドを使わずに Docker イメージのビルドからコンテナ起動までを単体 exe で完結させるサンプル。
 
@@ -79,7 +79,7 @@ GOOS=windows GOARCH=amd64 go build -o ssh-up.exe .     # Windows 向け
 ## プロジェクト構成
 
 ```
-ssh-server-go/
+compose-go-embed-sample/
 ├── compose.yaml   dockerfile_inline で Dockerfile を畳み込んだ compose ファイル
 ├── main.go        compose-go でパース → Docker SDK でビルド・起動
 ├── go.mod

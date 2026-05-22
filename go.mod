@@ -1,4 +1,4 @@
-module ssh-server-go
+module compose-go-embed-sample
 
 go 1.25.0
 

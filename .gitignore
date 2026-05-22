@@ -1,5 +1,5 @@
 # ビルド成果物
-/ssh-server-go
+/compose-go-embed-sample
 /ssh-up
 *.exe
 *.test

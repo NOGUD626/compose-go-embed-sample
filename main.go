@@ -38,7 +38,7 @@ var composeYAML []byte
 
 // サンプルが対象とするプロジェクト名・サービス名・既定値。
 const (
-	projectName     = "ssh-server-go"
+	projectName     = "compose-go-embed-sample"
 	serviceName     = "ubuntu-ssh"
 	dockerfileName  = "Dockerfile"
 	defaultProtocol = "tcp"

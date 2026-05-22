@@ -9,7 +9,7 @@
 #   docker compose -f compose.yaml up
 # でそのまま起動して挙動を比較できる。
 # ============================================================
-name: ssh-server-go
+name: compose-go-embed-sample
 
 services:
   ubuntu-ssh:
