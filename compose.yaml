@@ -1,0 +1,38 @@
+# ============================================================
+# compose-go + dockerfile_inline サンプル用 compose ファイル
+# ------------------------------------------------------------
+# Dockerfile を別ファイルにせず dockerfile_inline へ畳み込んでいる。
+# この 1 ファイルを //go:embed で exe に内包すれば、配布物は
+# 実行ファイル単体になり、物理ファイル (Dockerfile / compose) は不要。
+#
+# この YAML は本物の compose ファイルなので、デバッグ時は
+#   docker compose -f compose.yaml up
+# でそのまま起動して挙動を比較できる。
+# ============================================================
+name: ssh-server-go
+
+services:
+  ubuntu-ssh:
+    image: sandbox-ssh-go:latest
+    container_name: sandbox-ssh-go
+    hostname: sandbox
+    build:
+      context: .
+      # ↓ Dockerfile の中身をここに直接記述（別ファイル不要）
+      dockerfile_inline: |
+        FROM ubuntu:24.04
+        RUN apt-get update \
+            && apt-get install -y --no-install-recommends openssh-server sudo \
+            && rm -rf /var/lib/apt/lists/*
+        RUN userdel -r ubuntu 2>/dev/null || true \
+            && useradd -m -s /bin/bash ubuntu \
+            && echo 'ubuntu:ubuntu' | chpasswd \
+            && usermod -aG sudo ubuntu
+        RUN mkdir -p /run/sshd \
+            && sed -ri 's/^#?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config \
+            && sed -ri 's/^#?PermitRootLogin .*/PermitRootLogin no/' /etc/ssh/sshd_config
+        EXPOSE 22
+        CMD ["/usr/sbin/sshd", "-D", "-e"]
+    ports:
+      - "2223:22"
+    restart: unless-stopped

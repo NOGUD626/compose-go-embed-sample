@@ -1,0 +1,9 @@
+# ビルド成果物
+/ssh-server-go
+/ssh-up
+*.exe
+*.test
+*.out
+
+# macOS
+.DS_Store
